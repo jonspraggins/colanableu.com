@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Colana Bleu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --gold-glow: rgba(201, 168, 76, 0.4);
+      --navy: #05051a;
+      --blue-mid: #0d1b4b;
+      --blue-bright: #1a3a8f;
+      --text: #e8e0f0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: radial-gradient(ellipse at 60% 0%, #1a2e7a 0%, #0d1b4b 40%, #05051a 100%);
+      min-height: 100vh;
+      font-family: 'Raleway', sans-serif;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Sparkle canvas */
+    #sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Name */
+    .name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 10vw, 5rem);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-align: center;
+      line-height: 1.05;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, #a07830 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 24px var(--gold-glow));
+    }
+
+    .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      letter-spacing: 0.25em;
+      color: rgba(240, 208, 128, 0.65);
+      text-transform: uppercase;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Divider */
+    .divider {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: 0.5;
+    }
+    .divider-gem {
+      font-size: 0.75rem;
+      color: var(--gold);
+      opacity: 0.8;
+    }
+
+    /* Link buttons */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 100%;
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 1.5rem;
+      background: rgba(13, 27, 75, 0.55);
+      border: 1px solid rgba(201, 168, 76, 0.35);
+      border-radius: 4px;
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 400;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.15s;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .link-btn:hover {
+      background: rgba(26, 58, 143, 0.65);
+      border-color: var(--gold);
+      box-shadow: 0 0 18px var(--gold-glow), inset 0 0 12px rgba(201, 168, 76, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .link-btn i {
+      font-size: 1.15rem;
+      width: 1.4rem;
+      text-align: center;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .link-btn .label {
+      flex: 1;
+    }
+
+    .link-btn .arrow {
+      font-size: 0.7rem;
+      color: rgba(201, 168, 76, 0.45);
+      transition: color 0.2s, transform 0.2s;
+    }
+    .link-btn:hover .arrow {
+      color: var(--gold);
+      transform: translateX(3px);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 2.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.18);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="sparkles"></canvas>
+
+  <div class="container">
+    <h1 class="name">Colana Bleu</h1>
+    <p class="tagline">Drag Performer &amp; Podcaster</p>
+
+    <div class="divider"><span class="divider-gem">✦</span></div>
+
+    <nav class="links">
+
+      <a class="link-btn" href="https://www.instagram.com/colana_bleu/" target="_blank" rel="noopener">
+        <i class="fab fa-instagram"></i>
+        <span class="label">Instagram</span>
+        <i class="fas fa-chevron-right arrow"></i>
+      </a>
+
+      <a class="link-btn" href="https://www.facebook.com/colana" target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+        <span class="label">Facebook</span>
+        <i class="fas fa-chevron-right arrow"></i>
+      </a>
+
+      <a class="link-btn" href="https://twitter.com/colana_Bleu" target="_blank" rel="noopener">
+        <i class="fab fa-x-twitter"></i>
+        <span class="label">Twitter / X</span>
+        <i class="fas fa-chevron-right arrow"></i>
+      </a>
+
+      <a class="link-btn" href="https://www.youtube.com/channel/UCZsY0QBBpOe7xAFs8Xgz3ww" target="_blank" rel="noopener">
+        <i class="fab fa-youtube"></i>
+        <span class="label">YouTube</span>
+        <i class="fas fa-chevron-right arrow"></i>
+      </a>
+
+      <a class="link-btn" href="https://www.youtube.com/@MxMatched" target="_blank" rel="noopener">
+        <i class="fas fa-podcast"></i>
+        <span class="label">MxMatched Podcast</span>
+        <i class="fas fa-chevron-right arrow"></i>
+      </a>
+
+      <a class="link-btn" href="https://open.spotify.com/show/5GMafWKiaFLlSonoycwvaV" target="_blank" rel="noopener">
+        <i class="fab fa-spotify"></i>
+        <span class="label">Bleu Dreams — Spotify</span>
+        <i class="fas fa-chevron-right arrow"></i>
+      </a>
+
+      <a class="link-btn" href="https://cash.app/$MxBleu" target="_blank" rel="noopener">
+        <i class="fas fa-dollar-sign"></i>
+        <span class="label">CashApp</span>
+        <i class="fas fa-chevron-right arrow"></i>
+      </a>
+
+      <a class="link-btn" href="https://venmo.com/code?user_id=2329204788035584400" target="_blank" rel="noopener">
+        <i class="fas fa-money-bill-wave"></i>
+        <span class="label">Venmo</span>
+        <i class="fas fa-chevron-right arrow"></i>
+      </a>
+
+    </nav>
+
+    <footer>colana bleu &nbsp;✦&nbsp; all rights reserved</footer>
+  </div>
+
+  <script>
+    // Sparkle animation
+    const canvas = document.getElementById('sparkles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles;
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    function randomBetween(a, b) {
+      return a + Math.random() * (b - a);
+    }
+
+    function createParticle() {
+      return {
+        x: randomBetween(0, W),
+        y: randomBetween(0, H),
+        r: randomBetween(0.5, 2),
+        alpha: randomBetween(0.1, 0.9),
+        speed: randomBetween(0.002, 0.008),
+        phase: randomBetween(0, Math.PI * 2),
+        drift: randomBetween(-0.15, 0.15),
+        vy: randomBetween(-0.1, -0.4),
+      };
+    }
+
+    function init() {
+      resize();
+      particles = Array.from({ length: 120 }, createParticle);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const t = performance.now() * 0.001;
+
+      for (const p of particles) {
+        const a = Math.abs(Math.sin(p.phase + t * p.speed * 60)) * p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201, 168, 76, ${a})`;
+        ctx.fill();
+
+        p.y += p.vy;
+        p.x += p.drift;
+
+        if (p.y < -10 || p.x < -10 || p.x > W + 10) {
+          Object.assign(p, createParticle(), { y: H + 10, x: randomBetween(0, W) });
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', resize);
+    init();
+    draw();
+  </script>
+
+</body>
+</html>
